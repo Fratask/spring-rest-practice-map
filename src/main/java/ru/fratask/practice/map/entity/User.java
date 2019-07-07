@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Table(name = "users")
+@Entity
 public class User {
 
     @Id
@@ -17,4 +18,6 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+
 }
