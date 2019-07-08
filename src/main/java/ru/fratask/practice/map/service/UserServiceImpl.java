@@ -14,15 +14,11 @@ import java.util.List;
 @Slf4j
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
-
-    private final BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
