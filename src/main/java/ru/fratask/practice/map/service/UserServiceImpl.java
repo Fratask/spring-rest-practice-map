@@ -14,11 +14,15 @@ import java.util.List;
 @Slf4j
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -26,12 +30,15 @@ public class UserServiceImpl implements UserService {
     }
 
     public User register(User user) {
-        user.setId(userRepository.count());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        User registeredUser = userRepository.save(user);
-        log.info("IN - register - user: {} successfully registred", registeredUser);
-        return registeredUser;
+        if (user.getUsername().equals(userRepository.findByUsername(user.getUsername()).getUsername())){
+            return null;
+        } else {
+            user.setId(userRepository.count());
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            User registeredUser = userRepository.save(user);
+            log.info("IN - register - user: {} successfully registred", registeredUser);
+            return registeredUser;
+        }
     }
 
     public User findByUsername(String username) {
