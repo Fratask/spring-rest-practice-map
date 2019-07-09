@@ -27,5 +27,4 @@ public class User {
     @Column(name = "behavior_model")
     private BehaviorModel behaviorModel;
 
-
 }
