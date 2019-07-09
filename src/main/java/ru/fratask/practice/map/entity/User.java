@@ -3,6 +3,7 @@ package ru.fratask.practice.map.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Table(name = "users")
@@ -18,6 +19,9 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @OneToMany(mappedBy = "users")
+    private Set<Location> locations;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "behavior_model")
