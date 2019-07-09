@@ -88,6 +88,12 @@
             <version>2.1.9.RELEASE</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.bbn.openmap</groupId>
+            <artifactId>openmap</artifactId>
+            <version>5.0.3</version>
+        </dependency>
+
     </dependencies>
 
 </project>

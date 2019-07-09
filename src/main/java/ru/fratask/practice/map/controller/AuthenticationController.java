@@ -4,8 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,6 +47,13 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto){
         User user = userService.findByUsername(requestDto.getUsername());
+
+        if (user == null){
+            throw new UsernameNotFoundException("User not found with username: " + requestDto.getUsername());
+        }
+        if (!BCrypt.checkpw(requestDto.getPassword(), user.getPassword())){
+            throw new BadCredentialsException("Invalid username or password!");
+        }
 
         UUID uuid = UUID.randomUUID();
 
