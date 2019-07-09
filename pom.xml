@@ -94,6 +94,12 @@
             <version>5.0.3</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.jenetics</groupId>
+            <artifactId>jpx</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>
