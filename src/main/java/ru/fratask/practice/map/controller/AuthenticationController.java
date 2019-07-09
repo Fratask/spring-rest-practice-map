@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.fratask.practice.map.dto.AuthenticationRequestDto;
 import ru.fratask.practice.map.entity.User;
@@ -21,6 +22,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
+@RequestMapping(value = "/api/auth/")
 @Slf4j
 public class AuthenticationController {
 
