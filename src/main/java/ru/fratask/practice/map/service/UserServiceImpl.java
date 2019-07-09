@@ -20,13 +20,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     public User register(User user) {
-        if (user.getUsername().equals(userRepository.findByUsername(user.getUsername()).getUsername())){
+        if (userRepository.findByUsername(user.getUsername()).isPresent()){
             return null;
         } else {
             user.setId(userRepository.count());
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User findByUsername(String username) {
-        User result = userRepository.findByUsername(username);
+        User result = userRepository.findByUsername(username).get();
         log.info("IN - findByUsername - user: {} found by username: {}", result, username);
         return result;
     }

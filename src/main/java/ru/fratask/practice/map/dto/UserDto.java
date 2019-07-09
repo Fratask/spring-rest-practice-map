@@ -10,9 +10,6 @@ import ru.fratask.practice.map.entity.User;
 public class UserDto {
     private Long id;
     private String username;
-    private String firstName;
-    private String lastName;
-    private String email;
 
     public User toUser(){
         User user = new User();
