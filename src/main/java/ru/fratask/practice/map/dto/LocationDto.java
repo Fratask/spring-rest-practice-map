@@ -6,6 +6,7 @@ import java.util.Date;
 
 @Data
 public class LocationDto {
+    private Long locationId;
     private Long roadId;
     private Float latitude;
     private Float longitude;
