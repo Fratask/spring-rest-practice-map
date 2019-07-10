@@ -21,7 +21,7 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "user")
     private Set<Location> locations;
 
     @Enumerated(EnumType.STRING)

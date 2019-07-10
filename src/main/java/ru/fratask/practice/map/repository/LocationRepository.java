@@ -7,5 +7,4 @@ import ru.fratask.practice.map.entity.User;
 import java.util.Optional;
 
 public interface LocationRepository extends JpaRepository<Location, Long> {
-    Optional<User> findByUsername(String name);
 }

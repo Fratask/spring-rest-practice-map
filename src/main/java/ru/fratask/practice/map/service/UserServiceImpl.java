@@ -21,11 +21,6 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     public User register(User user) {
         if (userRepository.findByUsername(user.getUsername()).isPresent()){
             return null;
