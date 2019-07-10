@@ -31,6 +31,7 @@ public class JwtTokenProvider {
     @Autowired
     private UserDetailsService userDetailsService;
 
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -65,6 +66,7 @@ public class JwtTokenProvider {
     public String getUsername(String token) {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
     }
+
 
     public String resolveToken(HttpServletRequest req) {
         String bearerToken = req.getHeader("Authorization");
