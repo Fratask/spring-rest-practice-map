@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.fratask.practice.map.dto.AuthenticationRequestDto;
+import ru.fratask.practice.map.entity.BehaviorModel;
+import ru.fratask.practice.map.entity.Status;
 import ru.fratask.practice.map.entity.User;
 import ru.fratask.practice.map.service.UserService;
 
@@ -39,6 +41,8 @@ public class AuthenticationController {
         User registeredUser = new User();
         registeredUser.setUsername(authenticationRequestDto.getUsername());
         registeredUser.setPassword(authenticationRequestDto.getPassword());
+        registeredUser.setBehaviorModel(BehaviorModel.Normal);
+        registeredUser.setStatus(Status.ACTIVE);
         registeredUser = userService.register(registeredUser);
         if (registeredUser == null){
             throw new UsernameNotFoundException("Invalid username or password");
