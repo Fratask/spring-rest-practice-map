@@ -14,4 +14,6 @@ public interface LocationService {
     List<Location> getAll();
 
     void delete(Long id);
+
+    List<Location> findAllForUsername(String username);
 }

@@ -22,14 +22,39 @@ public class Location {
     private Long roadId;
 
     @Column(name = "latitude")
-    private Float latitude;
+    private Double latitude;
 
     @Column(name = "longitude")
-    private Float longitude;
+    private Double longitude;
 
     @Column(name = "elevation")
-    private Float elevation;
+    private Double elevation;
 
     @Column(name = "time")
     private Date time;
+
+    public double distanceToLocationInKm(Location location){
+        double distance = 0;
+        int R = 6373; // radius of the earth in kilometres
+        double lat1 = latitude;
+        double lat2 = location.getLatitude();
+        double lon1 = longitude;
+        double lon2 = location.getLongitude();
+        double lat1rad = Math.toRadians(lat1);
+        double lat2rad = Math.toRadians(lat2);
+        double deltaLat = Math.toRadians(lat2-lat1);
+        double deltaLon = Math.toRadians(lon2-lon1);
+
+        double a = Math.sin(deltaLat/2) * Math.sin(deltaLat/2) +
+                Math.cos(lat1rad) * Math.cos(lat2rad) *
+                        Math.sin(deltaLon/2) * Math.sin(deltaLon/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+        distance = R * c;
+        return distance;
+    }
+
+    public long timeBeetweenLocationsInMilliseconds(Location location){
+        return location.getTime().getTime() - time.getTime();
+    }
 }

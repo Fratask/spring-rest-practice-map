@@ -27,6 +27,7 @@
         <mysql.connector.version>8.0.15</mysql.connector.version>
     </properties>
 
+
     <dependencies>
 
         <!-- Spring Boot -->
@@ -89,17 +90,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.bbn.openmap</groupId>
-            <artifactId>openmap</artifactId>
-            <version>5.0.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.jenetics</groupId>
-            <artifactId>jpx</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
             <version>5.1.5.RELEASE</version>
@@ -119,8 +109,6 @@
             <artifactId>guava</artifactId>
             <version>22.0</version>
         </dependency>
-
-
     </dependencies>
 
 </project>

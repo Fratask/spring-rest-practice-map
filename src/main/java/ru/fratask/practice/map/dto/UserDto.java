@@ -2,18 +2,34 @@ package ru.fratask.practice.map.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import ru.fratask.practice.map.config.TokenStorage;
+import ru.fratask.practice.map.entity.Location;
 import ru.fratask.practice.map.entity.User;
+import ru.fratask.practice.map.repository.LocationRepository;
+import ru.fratask.practice.map.security.jwt.JwtTokenProvider;
+import ru.fratask.practice.map.service.LocationService;
+
+import java.util.List;
 
 
 @Data
+@Component
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDto {
-    private Long id;
     private String username;
+    private List<Location> locations;
+    private String token;
+
+    @Autowired
+    private static LocationService locationService;
+
+    @Autowired
+    private static JwtTokenProvider jwtTokenProvider;
 
     public User toUser(){
         User user = new User();
-        user.setId(id);
         user.setUsername(username);
 
         return user;
@@ -21,9 +37,9 @@ public class UserDto {
 
     public static UserDto fromUser(User user) {
         UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
         userDto.setUsername(user.getUsername());
-
+        userDto.setLocations(locationService.findAllForUsername(user.getUsername()));
+        userDto.setToken(TokenStorage.getInstance().getTokenUserIdBiMap().inverse().get(user.getId()));
         return userDto;
     }
 }
