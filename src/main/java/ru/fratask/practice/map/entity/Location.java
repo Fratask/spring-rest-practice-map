@@ -34,7 +34,7 @@ public class Location {
     private Date time;
 
     public double distanceToLocationInKm(Location location){
-        double distance = 0;
+        double distance;
         int R = 6373; // radius of the earth in kilometres
         double lat1 = latitude;
         double lat2 = location.getLatitude();
@@ -54,7 +54,7 @@ public class Location {
         return distance;
     }
 
-    public long timeBeetweenLocationsInMilliseconds(Location location){
+    public long timeBetweenLocationsInMilliseconds(Location location){
         return location.getTime().getTime() - time.getTime();
     }
 }

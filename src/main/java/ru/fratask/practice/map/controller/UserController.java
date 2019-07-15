@@ -22,14 +22,14 @@ public class UserController {
     private BehaviorModel analyzeBehaviorModel(UserDto userDto){
         double maxSpeed = 0;
         double averageSpeed;
-        float averageSpeedUp = 0;
+        double averageSpeedUp;
         long time = 0;
         double distance = 0;
 
         List<Location> locations = userDto.getLocations();
         Location prevLocation = locations.get(1);
         for (Location location: locations){
-            time = time + location.timeBeetweenLocationsInMilliseconds(prevLocation);
+            time = time + location.timeBetweenLocationsInMilliseconds(prevLocation);
             distance = distance + location.distanceToLocationInKm(prevLocation);
             prevLocation = location;
             double speed = distance/time;
@@ -38,6 +38,7 @@ public class UserController {
             }
         }
         averageSpeed = distance/time;
+        averageSpeedUp = averageSpeed/time;
         BehaviorModel behaviorModel;
         if (maxSpeed < 90) {
             if (averageSpeed > 60) {
