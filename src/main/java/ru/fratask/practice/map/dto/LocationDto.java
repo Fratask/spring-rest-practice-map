@@ -15,9 +15,9 @@ import java.util.Date;
 public class LocationDto {
     private Long locationId;
     private Long roadId;
-    private Float latitude;
-    private Float longitude;
-    private Float elevation;
+    private Double latitude;
+    private Double longitude;
+    private Double elevation;
     private Date time;
     private String token;
 

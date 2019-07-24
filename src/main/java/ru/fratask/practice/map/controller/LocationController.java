@@ -14,18 +14,22 @@ import ru.fratask.practice.map.service.UserService;
 @RestController(value = "/api/location/")
 public class LocationController {
 
-    @Autowired
-    private LocationService locationService;
+    private final LocationService locationService;
+
+    private final UserService userService;
+
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    public LocationController(LocationService locationService, UserService userService, JwtTokenProvider jwtTokenProvider) {
+        this.locationService = locationService;
+        this.userService = userService;
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
 
     @PostMapping("/add")
     public ResponseEntity addLocation(@RequestBody LocationDto locationDto){
-        Location registeredLocation = new Location();
+        Location registeredLocation;
         registeredLocation = locationDto.toLocation();
         locationService.register(registeredLocation);
         return ResponseEntity.ok(registeredLocation);

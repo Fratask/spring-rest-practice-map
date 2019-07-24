@@ -1,5 +1,6 @@
 package ru.fratask.practice.map.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class LocationServiceImpl implements LocationService {
 
     private final LocationRepository locationRepository;
@@ -21,22 +23,38 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public Location register(Location location) {
-        return locationRepository.save(location);
+        if (locationRepository.findById(location.getLocationId()).isPresent()) {
+            log.info("IN - serviceLocationServiceImpl.register - location: {} successfully registered", location);
+            return locationRepository.save(location);
+        } else {
+            log.warn("IN - service.LocationServiceImpl.register - location: {} already registered", location);
+            return location;
+        }
     }
 
     @Override
     public Location findById(Long id) {
-        return locationRepository.findById(id).get();
+        if (locationRepository.findById(id).isPresent()){
+            Location location = locationRepository.findById(id).get();
+            log.info("IN - service.LocationServiceImp.findById - location: {} was found with id {}", location, id);
+            return location;
+        } else {
+            log.warn("IN - service.LocationServiceImp.findById - location was not found with id {}", id);
+            return null;
+        }
     }
 
     @Override
     public List<Location> getAll() {
-        return locationRepository.findAll();
+        List<Location> result = locationRepository.findAll();
+        log.info("IN - service.LocationServiceImp.getAll - {} locations found", result.size());
+        return result;
     }
 
     @Override
     public void delete(Long id) {
         locationRepository.deleteById(id);
+        log.info("IN - service.LocationServiceImp.delete - location with id {} was deleted", id);
     }
 
     @Override
@@ -49,6 +67,7 @@ public class LocationServiceImpl implements LocationService {
                 targetLocations.add(location);
             }
         }
+        log.info("IN - service.LocationServiceImp.findAllForUsername - {} locations found for username {}", targetLocations.size(), username);
         return targetLocations;
     }
 }
