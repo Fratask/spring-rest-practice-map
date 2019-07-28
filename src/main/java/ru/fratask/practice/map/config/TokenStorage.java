@@ -3,9 +3,10 @@ package ru.fratask.practice.map.config;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import lombok.Data;
-import ru.fratask.practice.map.entity.User;
+import org.springframework.stereotype.Component;
 
 @Data
+@Component
 public class TokenStorage {
 
     private BiMap<String, Long> tokenUserIdBiMap = HashBiMap.create();

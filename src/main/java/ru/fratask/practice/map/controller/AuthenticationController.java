@@ -3,16 +3,14 @@ package ru.fratask.practice.map.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.fratask.practice.map.config.TokenStorage;
 import ru.fratask.practice.map.dto.AuthenticationRequestDto;
 import ru.fratask.practice.map.entity.BehaviorModel;
 import ru.fratask.practice.map.entity.Status;
@@ -30,9 +28,12 @@ public class AuthenticationController {
 
     private final UserService userService;
 
+    private final TokenStorage tokenStorage;
+
     @Autowired
-    public AuthenticationController(UserService userService) {
+    public AuthenticationController(UserService userService, TokenStorage tokenStorage) {
         this.userService = userService;
+        this.tokenStorage = tokenStorage;
     }
 
     @PostMapping("/register")
@@ -60,8 +61,9 @@ public class AuthenticationController {
             throw new BadCredentialsException("Invalid username or password!");
         }
 
-        UUID uuid = UUID.randomUUID();
 
+        UUID uuid = UUID.randomUUID();
+        tokenStorage.getTokenUserIdBiMap().inverse().put(user.getId(), uuid.toString());
         Map<Object, Object> response = new HashMap<>();
         response.put("username", requestDto.getUsername());
         response.put("token", uuid);
