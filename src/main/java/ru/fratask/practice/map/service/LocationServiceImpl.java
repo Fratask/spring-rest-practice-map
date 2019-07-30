@@ -24,7 +24,7 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public Location register(Location location) {
         if (locationRepository.findById(location.getLocationId()).isPresent()) {
-            log.info("IN - serviceLocationServiceImpl.register - location: {} successfully registered", location);
+            log.info("IN - service.LocationServiceImpl.register - location: {} successfully registered", location);
             return locationRepository.save(location);
         } else {
             log.warn("IN - service.LocationServiceImpl.register - location: {} already registered", location);

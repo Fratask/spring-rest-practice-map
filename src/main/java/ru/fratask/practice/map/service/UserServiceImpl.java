@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.fratask.practice.map.entity.Role;
 import ru.fratask.practice.map.entity.User;
+import ru.fratask.practice.map.repository.RoleRepository;
 import ru.fratask.practice.map.repository.UserRepository;
 
 import java.util.List;
@@ -16,6 +18,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -58,6 +63,24 @@ public class UserServiceImpl implements UserService {
         List<User> result = userRepository.findAll();
         log.info("IN - getAll - {} users found", result.size());
         return result;
+    }
+
+    public Role addRole(User user, Role role){
+        user.getRoles().add(role);
+        userRepository.save(user);
+        log.info("IN - service.UserServiceImpl.addRole Role: {} added to user {}", role, user);
+        return role;
+    }
+
+    public Role addRole(Long userId, Long roleId){
+
+        Role role = roleRepository.getOne(roleId);
+        User user = userRepository.getOne(userId);
+
+        user.getRoles().add(role);
+        userRepository.save(user);
+        log.info("IN - service.UserServiceImpl.addRole Role: {} added to user {}", role, user);
+        return role;
     }
 
     public void delete(Long id) {

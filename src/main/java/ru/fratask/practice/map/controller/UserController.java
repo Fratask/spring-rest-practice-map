@@ -1,8 +1,8 @@
 package ru.fratask.practice.map.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.fratask.practice.map.dto.UserDto;
 import ru.fratask.practice.map.entity.BehaviorModel;
@@ -13,7 +13,7 @@ import java.util.List;
 @RestController(value = "/api/user/")
 public class UserController {
 
-    @RequestMapping("behavior/analyze")
+    @PostMapping("/behavior/analyze")
     public ResponseEntity behaviorModelAnalyze(@RequestBody UserDto userDto){
         BehaviorModel response = analyzeBehaviorModel(userDto);
         return ResponseEntity.ok(response);
