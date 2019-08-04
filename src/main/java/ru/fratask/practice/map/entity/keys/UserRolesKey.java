@@ -1,4 +1,4 @@
-package ru.fratask.practice.map.entity;
+package ru.fratask.practice.map.entity.keys;
 
 import lombok.Data;
 

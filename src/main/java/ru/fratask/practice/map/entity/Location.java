@@ -1,23 +1,28 @@
 package ru.fratask.practice.map.entity;
 
 import lombok.Data;
+import ru.fratask.practice.map.entity.keys.LocationPK;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @Entity
 @Table(name = "locations")
-public class Location {
+@IdClass(LocationPK.class)
+public class Location implements Serializable {
 
     @Id
     @Column(name = "id_location")
     private Long locationId;
 
+    @Id
     @ManyToOne
     @JoinColumn(name = "id_user", nullable = false)
     private User user;
 
+    @Id
     @Column(name = "id_road")
     private Long roadId;
 

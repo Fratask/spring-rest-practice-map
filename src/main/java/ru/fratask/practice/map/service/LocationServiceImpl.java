@@ -23,18 +23,14 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public Location register(Location location) {
-        if (locationRepository.findById(location.getLocationId()).isPresent()) {
-            log.info("IN - service.LocationServiceImpl.register - location: {} successfully registered", location);
-            return locationRepository.save(location);
-        } else {
-            log.warn("IN - service.LocationServiceImpl.register - location: {} already registered", location);
-            return location;
-        }
+        Location registeredLocation = locationRepository.save(location);
+        log.info("IN - service.LocationServiceImpl.register - location: {} successfully registered", location);
+        return registeredLocation;
     }
 
     @Override
     public Location findById(Long id) {
-        if (locationRepository.findById(id).isPresent()){
+        if (locationRepository.existsById(id)){
             Location location = locationRepository.findById(id).get();
             log.info("IN - service.LocationServiceImp.findById - location: {} was found with id {}", location, id);
             return location;

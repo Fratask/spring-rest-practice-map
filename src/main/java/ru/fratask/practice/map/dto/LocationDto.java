@@ -1,17 +1,18 @@
 package ru.fratask.practice.map.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.fratask.practice.map.config.TokenStorage;
 import ru.fratask.practice.map.entity.Location;
-import ru.fratask.practice.map.security.jwt.JwtTokenProvider;
 import ru.fratask.practice.map.service.UserService;
 
 import java.util.Date;
 
 @Data
 @Component
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class LocationDto {
     private Long locationId;
     private Long roadId;
@@ -21,20 +22,16 @@ public class LocationDto {
     private Date time;
     private String token;
 
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-
-    @Autowired
-    private UserService userService;
 
     public Location toLocation(){
         Location location = new Location();
+        location.setLocationId(locationId);
+        location.setRoadId(roadId);
         location.setLatitude(latitude);
         location.setLongitude(longitude);
         location.setElevation(elevation);
         location.setRoadId(roadId);
         location.setTime(time);
-        location.setUser(userService.findByUsername(jwtTokenProvider.getUsername(token)));
         return location;
     }
 
