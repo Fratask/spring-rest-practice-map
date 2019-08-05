@@ -2,9 +2,7 @@ package ru.fratask.practice.map.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.fratask.practice.map.dto.UserDto;
 import ru.fratask.practice.map.entity.BehaviorModel;
 import ru.fratask.practice.map.entity.Location;
@@ -12,7 +10,8 @@ import ru.fratask.practice.map.service.LocationService;
 
 import java.util.List;
 
-@RestController(value = "/api/user/")
+@RestController
+@RequestMapping(value = "/api/user/")
 public class UserController {
 
     private final LocationService locationService;
@@ -24,8 +23,8 @@ public class UserController {
 
     @PostMapping("/behavior/analyze")
     public ResponseEntity behaviorModelAnalyze(@RequestBody UserDto userDto){
-        BehaviorModel response = analyzeBehaviorModel(userDto);
-        return ResponseEntity.ok(response);
+        BehaviorModel behaviorModel = analyzeBehaviorModel(userDto);
+        return ResponseEntity.ok(behaviorModel);
     }
 
     private BehaviorModel analyzeBehaviorModel(UserDto userDto){

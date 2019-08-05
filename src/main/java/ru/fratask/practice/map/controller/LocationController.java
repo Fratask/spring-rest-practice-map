@@ -33,7 +33,7 @@ public class LocationController {
         Long userId = tokenStorage.getTokenUserIdBiMap().get(locationDto.getToken());
         registeredLocation.setUser(userService.findById(userId));
         locationService.register(registeredLocation);
-        return ResponseEntity.ok("Location Registered");
+        return ResponseEntity.ok(registeredLocation);
     }
 
     @GetMapping("roads")

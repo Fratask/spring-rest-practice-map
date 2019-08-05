@@ -1,5 +1,7 @@
 package ru.fratask.practice.map.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import ru.fratask.practice.map.entity.keys.LocationPK;
 
@@ -15,27 +17,35 @@ public class Location implements Serializable {
 
     @Id
     @Column(name = "id_location")
+    @JsonProperty("locationId")
     private Long locationId;
 
     @Id
     @ManyToOne
     @JoinColumn(name = "id_user", nullable = false)
+    @JsonProperty("userId")
+    @JsonIgnore
     private User user;
 
     @Id
     @Column(name = "id_road")
+    @JsonProperty("roadId")
     private Long roadId;
 
     @Column(name = "latitude")
+    @JsonProperty("latitude")
     private Double latitude;
 
     @Column(name = "longitude")
+    @JsonProperty("longitude")
     private Double longitude;
 
     @Column(name = "elevation")
+    @JsonProperty("elevation")
     private Double elevation;
 
     @Column(name = "time")
+    @JsonProperty("time")
     private Date time;
 
     public double distanceToLocationInKm(Location location){
@@ -61,5 +71,18 @@ public class Location implements Serializable {
 
     public long timeBetweenLocationsInMilliseconds(Location location){
         return location.getTime().getTime() - time.getTime();
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "locationId=" + locationId +
+                ", user=" + user.getId() +
+                ", roadId=" + roadId +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", elevation=" + elevation +
+                ", time=" + time +
+                '}';
     }
 }
