@@ -45,8 +45,10 @@ public class AuthenticationController {
         registeredUser.setStatus(Status.ACTIVE);
         registeredUser = userService.register(registeredUser);
         if (registeredUser == null){
+            log.info("IN - controller.AuthenticationController.register - invalid username or password");
             throw new UsernameNotFoundException("Invalid username or password");
         }
+        log.info("IN - controller.AuthenticationController.register - user: {} registered");
         return ResponseEntity.ok(registeredUser);
     }
 
@@ -55,9 +57,11 @@ public class AuthenticationController {
         User user = userService.findByUsername(requestDto.getUsername());
 
         if (user == null){
+            log.info("IN - controller.AuthenticationController.login - user not found");
             throw new UsernameNotFoundException("User not found with username: " + requestDto.getUsername());
         }
         if (!BCrypt.checkpw(requestDto.getPassword(), user.getPassword())){
+            log.info("IN - controller.AuthenticationController.login - invalid username or password");
             throw new BadCredentialsException("Invalid username or password!");
         }
 
@@ -67,6 +71,7 @@ public class AuthenticationController {
         Map<Object, Object> response = new HashMap<>();
         response.put("username", requestDto.getUsername());
         response.put("token", uuid);
+        log.info("IN - controller.AuthenticationController.login - user: {} log in with token: {}", user, uuid);
         return ResponseEntity.ok(response);
 
     }
