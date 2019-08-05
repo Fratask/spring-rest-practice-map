@@ -59,4 +59,15 @@ public class User {
                 ", roles=" + roles +
                 '}';
     }
+
+    public boolean haveRole(String roleName){
+        for (Role role: roles){
+            if (role.getName().equals(roleName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }
