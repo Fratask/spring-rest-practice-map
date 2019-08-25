@@ -44,6 +44,7 @@ public class User {
     @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
+
     @JsonProperty("roles")
     private List<Role> roles;
 
@@ -53,7 +54,6 @@ public class User {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", locations=" + locations +
                 ", behaviorModel=" + behaviorModel +
                 ", status=" + status +
                 ", roles=" + roles +
